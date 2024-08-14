@@ -1,0 +1,8 @@
+#ignore DS_Store for all directories
+**/.DS_Store
+
+#ignore node_modules for all directories
+**/node_modules
+
+#ignore logs for all directories
+**/logs
