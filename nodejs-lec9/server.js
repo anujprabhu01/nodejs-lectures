@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const PORT = process.env.PORT || 3500;
@@ -10,24 +11,6 @@ const PORT = process.env.PORT || 3500;
 //custom middleware logger
 app.use(logger); // isnt logger a function? how does this work?
 
-// built-in middleware to handle cors; CORS stands for Cross-Origin Resource Sharing
-const whiteList = [
-  "https://www.yoursite.com",
-  "http://127.0.0.1:5500",
-  "http://localhost:3500",
-]; //CORS whitelist (domains that are allowed to access this nodejs backend server)
-// after developing, you can remove the localhost domains
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) !== -1 || !origin) {
-      //after deploying, you can remove !origin
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  optionsSuceessStatus: 200,
-};
 app.use(cors(corsOptions));
 
 // built-in middleware to handle url-encoded data
@@ -40,11 +23,9 @@ app.use(express.json());
 
 //serve static files like css, images, etc
 app.use("/", express.static(path.join(__dirname, "/public"))); //default is "/" anyways
-app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
 // routes
 app.use("/", require("./routes/root"));
-app.use("/subdir", require("./routes/subdir"));
 app.use("/employees", require("./routes/api/employees"));
 
 // app.all() is also a route handler
