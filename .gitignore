@@ -6,3 +6,6 @@
 
 #ignore logs for all directories
 **/logs
+
+# ignore .env file for all directories
+**/.env
