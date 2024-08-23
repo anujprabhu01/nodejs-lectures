@@ -1,0 +1,12 @@
+Authentication vs Authorization:
+
+Authentication: process of verifying who someone is
+Authorization: process of verifying what resources a user has access to
+
+handling new login: Authentication
+Issuing JWTs: Authorization (confirm authentication and allow access to api endpoints)
+
+User Roles and Permissions:
+1. provide different levels of access to different users
+2. sent in access token payload
+3. verified with middleware
